@@ -1,0 +1,10 @@
+{
+  "name": "Graduation-Editor",
+  "references": [
+    "Graduation"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}
