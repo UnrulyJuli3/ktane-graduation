@@ -80,18 +80,18 @@ public class FakeBombInfo : MonoBehaviour
         if (timeLeft < 60)
         {
             if (timeLeft < 10) time += "0";
-            time += (int) timeLeft;
+            time += (int)timeLeft;
             time += ".";
-            int s = ((int) (timeLeft * 100)) % 100;
+            int s = ((int)(timeLeft * 100)) % 100;
             if (s < 10) time += "0";
             time += s;
         }
         else
         {
             if (timeLeft < 600) time += "0";
-            time += (int) timeLeft / 60;
+            time += (int)timeLeft / 60;
             time += ":";
-            int s = (int) timeLeft % 60;
+            int s = (int)timeLeft % 60;
             if (s < 10) time += "0";
             time += s;
         }
@@ -280,7 +280,7 @@ public class FakeBombInfo : MonoBehaviour
         List<THWidget> RandomWidgets = new List<THWidget>();
 
         widgets.Add(TestHarnessSerialNumber.CreateComponent(SerialNumberWidget, config));
-        serial = ((TestHarnessSerialNumber) widgets[0]).serial;
+        serial = ((TestHarnessSerialNumber)widgets[0]).serial;
 
         foreach (KMWidget widget in FindObjectsOfType<KMWidget>())
             widgets.Add(widget.gameObject.AddComponent<TestHarnessModWidget>());
@@ -325,7 +325,7 @@ public class FakeBombInfo : MonoBehaviour
                                 }
                                 else
                                 {
-                                    widgets.Add(TestHarnessBatteryWidget.CreateComponent(BatteryWidget, (int) widgetConfig.BatteryType));
+                                    widgets.Add(TestHarnessBatteryWidget.CreateComponent(BatteryWidget, (int)widgetConfig.BatteryType));
                                 }
                             }
                             break;
@@ -546,8 +546,8 @@ public class TestHarness : MonoBehaviour
         var allModules = Modules.ToArray().Concat<Component>(NeedyModules.ToArray());
         foreach (Component moduleComponent in allModules)
         {
-            if(moduleComponent is KMBombModule)
-		        fakeInfo.modules.Add(new KeyValuePair<KMBombModule, bool>((KMBombModule)moduleComponent, false));
+            if (moduleComponent is KMBombModule)
+                fakeInfo.modules.Add(new KeyValuePair<KMBombModule, bool>((KMBombModule)moduleComponent, false));
             Handlers(moduleComponent.GetComponent<KMBombInfo>());
         }
         fakeInfo.needyModules = NeedyModules.ToList();
@@ -577,7 +577,7 @@ public class TestHarness : MonoBehaviour
             var info = gameInfo;
             fakeInfo.OnLights += on =>
             {
-                if(info.OnLightsChange != null)
+                if (info.OnLightsChange != null)
                     info.OnLightsChange(on);
             };
         }
@@ -1044,7 +1044,7 @@ public class TestHarness : MonoBehaviour
             KMBombModule mod = modules[i];
             TestHarnessStatusLight statuslight = CreateStatusLight(mod.transform);
 
-            modules[i].OnPass = delegate ()
+            modules[i].OnPass += delegate ()
             {
                 KeyValuePair<KMBombModule, bool> kvp = fakeInfo.modules.First(t => t.Key.Equals(mod));
                 if (kvp.Value) return false;
@@ -1060,7 +1060,7 @@ public class TestHarness : MonoBehaviour
             };
 
             int j = i;
-            modules[i].OnStrike = delegate ()
+            modules[i].OnStrike += delegate ()
             {
                 Debug.Log("Strike");
                 if (statuslight != null) statuslight.FlashStrike();
@@ -1108,7 +1108,7 @@ public class TestHarness : MonoBehaviour
         AudioSourceTransforms = new GameObject().transform;
         AudioSourceTransforms.name = "Audio Sources";
         AudioSourceTransforms.parent = transform;
-        
+
         KMAudio[] kmAudios = FindObjectsOfType<KMAudio>();
         foreach (KMAudio kmAudio in kmAudios)
         {
@@ -1148,7 +1148,7 @@ public class TestHarness : MonoBehaviour
         {
             Destroy(source.gameObject);
         }
-        catch (MissingReferenceException) {}
+        catch (MissingReferenceException) { }
     }
 
     protected void PlaySoundHandler(string clipName, Transform t)
@@ -1194,7 +1194,7 @@ public class TestHarness : MonoBehaviour
                 }
                 catch (MissingReferenceException) { }
             };
-            if(!loop)
+            if (!loop)
                 StartCoroutine(DestroyAudioSource(audioSource, clip.length));
         }
         else

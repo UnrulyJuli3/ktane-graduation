@@ -18,25 +18,25 @@ public sealed class GraduationModule : ModdedModule
     private Text _minorDisplay;
 
     [SerializeField]
-    private KMSelectable _minorButtonLeft;
+    internal KMSelectable _minorButtonLeft;
 
     [SerializeField]
-    private KMSelectable _minorButtonRight;
+    internal KMSelectable _minorButtonRight;
 
     [SerializeField]
-    private KMSelectable[] _courseButtons;
+    internal KMSelectable[] _courseButtons;
 
     [SerializeField]
     private GameObject _extra1Area;
 
     [SerializeField]
-    private KMSelectable[] _extra1Selectables;
+    internal KMSelectable[] _extra1Selectables;
 
     [SerializeField]
     private GameObject _extra2Area;
 
     [SerializeField]
-    private KMSelectable[] _extra2Selectables;
+    internal KMSelectable[] _extra2Selectables;
 
     [SerializeField]
     private GameObject _extra3Area;
@@ -54,10 +54,10 @@ public sealed class GraduationModule : ModdedModule
     private KMSelectable _extra3Left;
 
     [SerializeField]
-    private KMSelectable _extra3Right;
+    internal KMSelectable _extra3Right;
 
     [SerializeField]
-    private KMSelectable _extra3Submit;
+    internal KMSelectable _extra3Submit;
 
     [SerializeField]
     private Text _extra3KeyText;
@@ -158,33 +158,35 @@ public sealed class GraduationModule : ModdedModule
         new CoordRule(3, 3, 15),
     };
 
-    private int _currentStage;
+    internal int _currentStage;
 
-    private int _selectedMinor;
+    internal int _selectedMinor;
 
     private Major _currentMajor;
 
     private List<string> _majorCourses;
 
-    private int _correctMinor;
+    internal int _correctMinor;
 
-    private int _correctCourse;
+    internal int _correctCourse;
 
     private List<string> _courseLabels;
 
-    private bool _isExtra;
+    internal bool _isExtra;
 
-    private int[] _extraColorSource;
+    internal int[] _extraColorSource;
 
-    private int[] _extraColorSequence;
+    internal int[] _extraColorSequence;
 
-    private int _extraColorProgress;
+    internal int _extraColorProgress;
 
-    private int _extra3Solution;
+    internal int _extra3Solution;
 
-    private int _extra3Selected;
+    internal int _extra3Selected;
 
     private string[] _ignoreList;
+
+    internal bool _isForceSolve;
 
     private void Start()
     {
@@ -333,18 +335,25 @@ public sealed class GraduationModule : ModdedModule
 
             if (index == _correctCourse && _selectedMinor == _correctMinor)
             {
-                Log($"Solved modules: {NumSolved} of {TotalSolvable} - expecting {TargetPercent}% = {TargetSolved}");
-                if (NumSolved > TargetSolved)
+                if (_isForceSolve)
                 {
-                    InitializeExtraCredit();
-                }
-                else if (NumSolved < TargetSolved)
-                {
-                    Strike("Strike! (too early)");
+                    StageComplete();
                 }
                 else
                 {
-                    StageComplete();
+                    Log($"Solved modules: {NumSolved} of {TotalSolvable} - expecting {TargetPercent}% = {TargetSolved}");
+                    if (NumSolved > TargetSolved)
+                    {
+                        InitializeExtraCredit();
+                    }
+                    else if (NumSolved < TargetSolved)
+                    {
+                        Strike("Strike! (too early)");
+                    }
+                    else
+                    {
+                        StageComplete();
+                    }
                 }
             }
             else
@@ -369,11 +378,11 @@ public sealed class GraduationModule : ModdedModule
                         // row 1
                         _extra2Selectables[0],
                         _extra2Selectables[1],
-                        _extra2Selectables[1],
+                        null,
                         // row 2
                         _extra2Selectables[2],
                         _extra2Selectables[3],
-                        _extra2Selectables[3],
+                        null,
                     };
                 case 2:
                     return new[]
@@ -390,19 +399,19 @@ public sealed class GraduationModule : ModdedModule
             // row 1
             _minorButtonLeft,
             _minorButtonRight,
-            _minorButtonRight,
+            null,
             // row 2
             _courseButtons[0],
-            _courseButtons[0],
-            _courseButtons[0],
+            null,
+            null,
             // row 3
             _courseButtons[1],
-            _courseButtons[1],
-            _courseButtons[1],
+            null,
+            null,
             // row 4
             _courseButtons[2],
-            _courseButtons[2],
-            _courseButtons[2],
+            null,
+            null,
         };
     }
 

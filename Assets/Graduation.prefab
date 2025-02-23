@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 114325017881767000}
   - component: {fileID: 114137161464417410}
   - component: {fileID: 114519108917738320}
+  - component: {fileID: 114632978882838356}
   m_Layer: 0
   m_Name: Graduation
   m_TagString: Untagged
@@ -3427,6 +3428,22 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: (10, 10)
+--- !u!114 &114632978882838356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125553079248086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a5c3a109415dc4f99ddea960573c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TwitchHelpMessage: '!{0} minor <forensics/aerospaceengineering/0/1/...> | !{0} course
+    <1/2/3> | !{0} press 1 2 3 4 (press colored buttons in reading order) | !{0} key
+    1 (submit Key 1)'
+  TwitchManualCode: 
+  TwitchAbandonModule: []
 --- !u!114 &114646084562548396
 MonoBehaviour:
   m_ObjectHideFlags: 1
