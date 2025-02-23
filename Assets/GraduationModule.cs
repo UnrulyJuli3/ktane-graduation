@@ -334,13 +334,17 @@ public sealed class GraduationModule : ModdedModule
             if (index == _correctCourse && _selectedMinor == _correctMinor)
             {
                 Log($"Solved modules: {NumSolved} of {TotalSolvable} - expecting {TargetPercent}% = {TargetSolved}");
-                if (NumSolved == TargetSolved)
+                if (NumSolved > TargetSolved)
                 {
-                    StageComplete();
+                    InitializeExtraCredit();
+                }
+                else if (NumSolved < TargetSolved)
+                {
+                    Strike("Strike! (too early)");
                 }
                 else
                 {
-                    InitializeExtraCredit();
+                    StageComplete();
                 }
             }
             else
@@ -412,7 +416,7 @@ public sealed class GraduationModule : ModdedModule
     {
         _isExtra = true;
         _mainArea.SetActive(false);
-        Log($"Entering extra credit stage {_currentStage + 1}");
+        Log($"Late for class! Entering extra credit stage {_currentStage + 1}");
         switch (_currentStage)
         {
             case 0:
